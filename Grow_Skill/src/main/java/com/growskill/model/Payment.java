@@ -22,8 +22,8 @@ public class Payment {
 	
 	 private long amount;
 	 private String paymentMethod; 
-	 private LocalDateTime paymentDate;
+	 private LocalDateTime paymentDateTime;
 
- // Getters, setters, constructors
+
 }
 

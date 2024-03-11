@@ -5,6 +5,6 @@ import com.growskill.model.Customer;
 
 public interface PaymentService {
 	
-	public void processPayment(Customer customer, Course course, long amount);
+	public boolean processPayment(long amount);
 
 }

@@ -16,21 +16,24 @@ public class PaymentServiceImpl implements PaymentService{
 	@Autowired
     private PaymentRepository paymentRepository;
 	
-	public void processPayment(Customer customer, Course course, long amount) {
+	@Override
+	public boolean processPayment(long amount) {
         // Dummy logic for processing payment
         Payment payment = new Payment();
         payment.setAmount(amount);
         payment.setPaymentMethod("Dummy Payment Method");
-        payment.setPaymentDate(LocalDateTime.now());
+        payment.setPaymentDateTime(LocalDateTime.now());
 
         // Save payment details
-        paymentRepository.save(payment);
+         Payment savePayment = paymentRepository.save(payment);
 
-        // Update customer's enrolled courses
-        customer.getEnrolledCourses().add(course);
-
-        // Update course's enrolled customers
-        course.getEnrolledCustomers().add(customer);
+         if(savePayment != null) return true;
+         else return false;
+//        // Update customer's enrolled courses
+//        customer.getEnrolledCourses().add(course);
+//
+//        // Update course's enrolled customers
+//        course.getEnrolledCustomers().add(customer);
     }
 
 }

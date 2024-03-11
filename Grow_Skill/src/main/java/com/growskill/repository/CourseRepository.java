@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.growskill.model.Course;
 
-public interface CourseRepository extends JpaRepository<Course, Integer>{
+public interface CourseRepository extends JpaRepository<Course, String>{
 	
-	List<Course> findByInstructorId(int instructorId);
 
 }

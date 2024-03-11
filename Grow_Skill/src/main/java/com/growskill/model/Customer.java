@@ -30,7 +30,7 @@ public class Customer {
     @ManyToMany
     @JoinTable(
       name = "customer_course",
-      joinColumns = @JoinColumn(name = "customer_id"),
-      inverseJoinColumns = @JoinColumn(name = "course_id"))
+      joinColumns = @JoinColumn(name = "customer_id"))
+//      inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> enrolledCourses;
 }

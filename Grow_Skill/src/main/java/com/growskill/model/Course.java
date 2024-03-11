@@ -24,19 +24,15 @@ import lombok.NoArgsConstructor;
 public class Course {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private String courseId;
 
     private String courseName;
+    private String courseDetails;
+    private long courseAmount;
     
     @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClassSession> session;
-    
-   
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    private List<CourseSession> session;
     
     @JsonIgnore
     @ManyToMany(mappedBy = "enrolledCourses")

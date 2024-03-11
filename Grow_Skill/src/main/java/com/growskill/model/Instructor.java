@@ -25,9 +25,10 @@ public class Instructor {
 
     private String name;
     private String expertise;
+    private byte experienceInYr;
     
     @JsonIgnore
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
-    private List<Course> courses;
+    private List<CourseSession> coursesSession;
 
 }
