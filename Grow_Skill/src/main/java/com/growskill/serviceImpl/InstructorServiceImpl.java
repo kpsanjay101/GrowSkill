@@ -1,10 +1,12 @@
 package com.growskill.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.growskill.exceptionHandler.InstructorNotFoundException;
 import com.growskill.model.Instructor;
 import com.growskill.repository.InstructorRepository;
 import com.growskill.service.InstructorService;
@@ -22,7 +24,12 @@ public class InstructorServiceImpl implements InstructorService{
 
 	@Override
     public Instructor getInstructorById(int instructorId) {
-        return instructorRepository.findById(instructorId).orElse(null);
+        Optional<Instructor> optionalInstructor = instructorRepository.findById(instructorId);
+        
+        if(optionalInstructor.isEmpty()) {
+			throw new InstructorNotFoundException("Instructor doesn't exist with this instructorId : "+instructorId);
+		}
+        return optionalInstructor.get();
     }
 
 	@Override

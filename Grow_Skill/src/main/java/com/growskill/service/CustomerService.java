@@ -11,7 +11,7 @@ public interface CustomerService {
 	public Customer getCustomerById(int customerId);
 	public Customer saveCustomer(Customer customer);
 	public String deleteCustomer(int customerId);
-	public Course buyCourses(String courseId, int customerId);
+	public Course buyCourses(String courseId, int customerId, long amount);
 	
 	
 	

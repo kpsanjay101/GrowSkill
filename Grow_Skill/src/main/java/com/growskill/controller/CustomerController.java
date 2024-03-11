@@ -53,23 +53,22 @@ public class CustomerController {
     @PostMapping("/enroll/{courseId}/customer/{customerId}/{amount}")
     public ResponseEntity<String> enrollCustomerInCourse(@PathVariable String courseId,
             @PathVariable Integer customerId, @PathVariable Long amount) {            
-        Course course = courseService.getCourseById(courseId);
-        Customer customer = customerService.getCustomerById(customerId);
-
-        if (course != null && customer != null) {
-            
-
-            // Simulate payment processing
-            boolean res = paymentService.processPayment(amount);
-            
-            if(res) {
-            	customerService.buyCourses(courseId, customerId);
-            	return ResponseEntity.ok("Enrollment successful");
-            }
-            else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment is not completed");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course or customer not found");
-        }
+//        Course course = courseService.getCourseById(courseId);
+//        Customer customer = customerService.getCustomerById(customerId);
+    	
+    	Course course = customerService.buyCourses(courseId, customerId,amount);
+    	
+    	if(course != null) {
+    		return ResponseEntity.ok("Enrollment successful");
+    	}else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment is not completed");
+//       if(res) {
+//            	customerService.buyCourses(courseId, customerId);
+//            	return ResponseEntity.ok("Enrollment successful");
+//            }
+//            else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment is not completed");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course or customer not found");
+//        }
     }
 
    

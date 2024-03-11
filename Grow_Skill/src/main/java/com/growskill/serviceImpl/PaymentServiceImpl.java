@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.growskill.exceptionHandler.PaymentException;
 import com.growskill.model.Course;
 import com.growskill.model.Customer;
 import com.growskill.model.Payment;
@@ -17,23 +18,20 @@ public class PaymentServiceImpl implements PaymentService{
     private PaymentRepository paymentRepository;
 	
 	@Override
-	public boolean processPayment(long amount) {
+	public boolean processPayment(long amount, Course course) {
         // Dummy logic for processing payment
         Payment payment = new Payment();
+        if(course.getCourseAmount() != amount) {
+        	throw new PaymentException("Please Enter correct Amount");
+        }
         payment.setAmount(amount);
         payment.setPaymentMethod("Dummy Payment Method");
         payment.setPaymentDateTime(LocalDateTime.now());
-
-        // Save payment details
-         Payment savePayment = paymentRepository.save(payment);
+        
+        Payment savePayment = paymentRepository.save(payment);
 
          if(savePayment != null) return true;
          else return false;
-//        // Update customer's enrolled courses
-//        customer.getEnrolledCourses().add(course);
-//
-//        // Update course's enrolled customers
-//        course.getEnrolledCustomers().add(customer);
     }
 
 }

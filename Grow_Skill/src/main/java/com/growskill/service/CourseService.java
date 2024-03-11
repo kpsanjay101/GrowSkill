@@ -10,7 +10,7 @@ public interface CourseService {
 	public List<Course> getAllCourses();
 	public Course getCourseById(String courseId);
 	public Course saveCourse(Course course);
-	public String deleteCourse(String courseId);
+	public Course deleteCourse(String courseId);
 	
 
 }

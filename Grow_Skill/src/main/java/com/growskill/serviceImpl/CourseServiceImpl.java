@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.growskill.exceptionHandler.CourseAllReadyExistException;
 import com.growskill.exceptionHandler.CourseNotFoundException;
 import com.growskill.model.Course;
 import com.growskill.repository.CourseRepository;
@@ -35,30 +36,27 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public Course saveCourse(Course course) {
+		Optional<Course> opCourse = courseRepository.findById(course.getCourseId());
+		if(opCourse.isPresent()) {
+			throw new CourseAllReadyExistException("Course all ready exist with this courseId : "+course.getCourseId());
+		}
+		
 		return courseRepository.save(course);
 		
 	}
 
 	@Override
-	public String deleteCourse(String courseId) {
+	public Course deleteCourse(String courseId) {
+		
+		Optional<Course> opCourse = courseRepository.findById(courseId);
+		if(opCourse.isEmpty()) {
+			throw new CourseNotFoundException("Course doesn't exist with this courseId : "+courseId);
+		}
+		
 		courseRepository.deleteById(courseId);
-		return "course deleted successfuly";
+		return opCourse.get();
 		
 	}
 
-//	@Override
-//	public Instructor assignInstructorToCourse(String courseId, int instructorId) {
-//		// TODO Auto-generated method stub
-//		Optional<Course> opCourse = courseRepository.findById(courseId);
-//		Optional<Instructor> opInstructor = instructorRepository.findById(instructorId);
-//		if(opCourse.isPresent() && opInstructor.isPresent()) {
-//			Course findedCourse = opCourse.get();
-//			findedCourse.setInstructor(opInstructor.get());
-//			courseRepository.save(findedCourse);
-//		}
-//		return opInstructor.get();
-//	}
 	
-
-
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.growskill.model.CourseSession;
 import com.growskill.model.Instructor;
+import com.growskill.exceptionHandler.CourseNotFoundException;
+import com.growskill.exceptionHandler.InstructorNotFoundException;
 import com.growskill.model.Course;
 import com.growskill.repository.CourseSessionRepository;
 import com.growskill.repository.InstructorRepository;
@@ -41,18 +43,22 @@ public class CourseSessionServiceImpl implements CourseSessionService{
 	@Override
     public CourseSession saveSession(CourseSession session, String courseId, int instructorId) {
 		
-		Course course = courseRepository.findById(courseId).get();
-		Instructor instructor = instructorRepository.findById(instructorId).get();
-		CourseSession saveSession = null;
-		if(course != null && instructor != null) {
-			
-			session.setCourse(course);
-			session.setInstructor(instructor);
-			courseRepository.save(course);
-			saveSession = sessionRepository.save(session);
-			course.getSession().add(saveSession);
+		Optional<Course> optionalCourse = courseRepository.findById(courseId);
+		Optional<Instructor> optionalInstructor =  instructorRepository.findById(instructorId);
+		CourseSession saveSession = null; 
+		if(optionalCourse.isEmpty()) {
+			throw new CourseNotFoundException("Course doesn't exist with this courseId : "+courseId);
 		}
 		
+		if(optionalInstructor.isEmpty()) {
+			throw new InstructorNotFoundException("Instructor doesn't exist with this instructorId : "+instructorId);
+		}
+		
+		session.setCourse(optionalCourse.get());
+		session.setInstructor(optionalInstructor.get());
+		courseRepository.save(optionalCourse.get());
+		saveSession = sessionRepository.save(session);
+		optionalCourse.get().getSession().add(saveSession);
         return saveSession;
     }
 	
@@ -70,8 +76,7 @@ public class CourseSessionServiceImpl implements CourseSessionService{
 	        Course course = optionalCourse.get();
 	        return course.getSession();
 	    } else {
-	        // Handle case where the course with the given ID is not found
-	        return Collections.emptyList(); // or throw an exception
+	    	throw new CourseNotFoundException("Course doesn't exist with this courseId : "+courseId);
 	    }
 	}
 
