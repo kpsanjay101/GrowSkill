@@ -37,11 +37,11 @@ GrowSkill is an e-learning platform designed to provide online courses in Baking
 
 ## How to Run
 
-1. Clone the repository: `git clone https://github.com/yourusername/growskill.git`
+1. Clone the repository: `git clone https://github.com/kpsanjay101/GrowSkill.git`
 2. Navigate to the project directory: `cd growskill`
 3. Build the project: `mvn clean install`
 4. Run the application: `java -jar target/growskill-1.0.0.jar`
-5. Access the application in your browser: `http://localhost:8080`
+5. Access the application in your browser: `http://localhost:9099`
 
 ## Contribution Guidelines
 
@@ -53,8 +53,8 @@ If you would like to contribute to GrowSkill, please follow these guidelines:
 - Push to the branch: `git push origin feature/new-feature`
 - Submit a pull request
 
-## License
+## Happy learning with GrowSkill!
 
-This project is licensed under the [MIT License](LICENSE).
 
-Happy learning with GrowSkill!
+
+
